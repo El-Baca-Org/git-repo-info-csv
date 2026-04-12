@@ -1,4 +1,5 @@
 # Download GitHub Repo Information in CSV Format
+(Aşağıda Türkçe açıklamayı bulabilirsiniz / Turkish description is available below)
 
 This project is a simple Python script that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
 
@@ -18,14 +19,19 @@ pip install requests
 ## Usage
 
 1. Download or clone the project files.
-2. In the `script.py` file, replace the `username` variable with your GitHub username.
-3. Run the Python script:
+2. Run the Python script with the required `--username` argument:
 
 ```bash
-python script.py
+python GitRepoInfosCSV.py --username your_github_username
 ```
 
-4. After the script runs, a file named `github_repos.csv` will be generated in the project folder, containing the repository information for the specified user.
+You can also specify a custom output file using the `--output` argument:
+
+```bash
+python GitRepoInfosCSV.py --username your_github_username --output my_repos.csv
+```
+
+3. After the script runs, a CSV file will be generated in the project folder, containing the repository information for the specified user.
 
 ## Output File
 
@@ -41,3 +47,54 @@ The CSV file will contain the following columns:
 ## License
 
 This project is licensed under the GNU License. For more details, refer to the `LICENSE` file.
+
+---
+
+# GitHub Repo Bilgilerini CSV Formatında İndir
+
+Bu proje, belirli bir GitHub kullanıcısının tüm depo (repository) bilgilerini çeken ve bir CSV dosyasına kaydeden basit bir Python betiğidir. Depo detayları API aracılığıyla çekilir ve CSV formatında yazılır, böylece bir GitHub kullanıcısının tüm depoları hakkındaki bilgilere erişmek kolaylaşır.
+
+## Gereksinimler
+
+Bu betiği çalıştırmak için aşağıdakilere ihtiyacınız olacak:
+
+- Python 3.x
+- `requests` kütüphanesi (API'den veri çekmek için)
+
+Terminal veya komut isteminizde aşağıdaki komutu çalıştırarak `requests` kütüphanesini kurabilirsiniz:
+
+```bash
+pip install requests
+```
+
+## Kullanım
+
+1. Proje dosyalarını indirin veya klonlayın.
+2. Gerekli `--username` argümanı ile Python betiğini çalıştırın:
+
+```bash
+python GitRepoInfosCSV.py --username github_kullanici_adiniz
+```
+
+Ayrıca `--output` argümanını kullanarak özel bir çıktı dosyası da belirleyebilirsiniz:
+
+```bash
+python GitRepoInfosCSV.py --username github_kullanici_adiniz --output depolarim.csv
+```
+
+3. Betik çalıştıktan sonra, proje klasöründe belirtilen kullanıcıya ait depo bilgilerini içeren bir CSV dosyası oluşturulacaktır.
+
+## Çıktı Dosyası
+
+CSV dosyası aşağıdaki sütunları içerecektir:
+
+- **Repository Name**: Deponun adı
+- **Description**: Deponun açıklaması
+- **Language**: Depoda kullanılan programlama dili
+- **Star Count**: Deponun GitHub'da sahip olduğu yıldız sayısı
+- **Fork Count**: Deponun fork (çatallama) sayısı
+- **URL**: Deponun GitHub URL'si
+
+## Lisans
+
+Bu proje GNU Lisansı altında lisanslanmıştır. Daha fazla detay için `LICENSE` dosyasına başvurabilirsiniz.

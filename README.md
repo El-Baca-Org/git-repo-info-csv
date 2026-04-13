@@ -2,12 +2,15 @@
 
 This project is a simple Python script that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
 
+The tool supports both a Graphical User Interface (GUI) and a Command-Line Interface (CLI).
+
 ## Requirements
 
 To run this script, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
+- `tkinter` library (usually included with Python, used for the GUI)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -18,14 +21,27 @@ pip install requests
 ## Usage
 
 1. Download or clone the project files.
-2. In the `script.py` file, replace the `username` variable with your GitHub username.
-3. Run the Python script:
+2. Run the Python script in your preferred mode:
+
+### GUI Mode
+Simply run the script without any arguments to launch the graphical interface:
 
 ```bash
-python script.py
+python GitRepoInfosCSV.py
+```
+A window will appear where you can enter the GitHub username and optionally choose the output CSV file location.
+
+### CLI Mode
+You can also run the script directly from the command line by providing the required `--username` argument. You can optionally specify the output file using the `--output` argument.
+
+```bash
+python GitRepoInfosCSV.py --username your_github_username
 ```
 
-4. After the script runs, a file named `github_repos.csv` will be generated in the project folder, containing the repository information for the specified user.
+Example with custom output file:
+```bash
+python GitRepoInfosCSV.py --username torvalds --output linus_repos.csv
+```
 
 ## Output File
 

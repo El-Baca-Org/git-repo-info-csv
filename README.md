@@ -8,6 +8,7 @@ To run this script, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
+- `tkinter` library (usually included in the Python standard library, but on some Linux distributions you might need to install it with `sudo apt install python3-tk`)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -18,14 +19,24 @@ pip install requests
 ## Usage
 
 1. Download or clone the project files.
-2. In the `script.py` file, replace the `username` variable with your GitHub username.
-3. Run the Python script:
+
+### CLI Mode
+You can use the command-line interface to quickly fetch repository information by specifying the `--username` argument. You can optionally specify an output file with `--output`.
 
 ```bash
-python script.py
+python GitRepoInfosCSV.py --username torvalds --output torvalds_repos.csv
 ```
 
-4. After the script runs, a file named `github_repos.csv` will be generated in the project folder, containing the repository information for the specified user.
+### GUI Mode
+If you run the script without any arguments, it will launch a Graphical User Interface (GUI).
+
+```bash
+python GitRepoInfosCSV.py
+```
+This will open a window where you can input the GitHub username and the desired output filename, and then click a button to fetch and save the data.
+
+### Jupyter Notebook
+The project also includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`). When you run the notebook cells, you will be interactively prompted to enter a GitHub username.
 
 ## Output File
 

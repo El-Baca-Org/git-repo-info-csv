@@ -18,14 +18,33 @@ pip install requests
 ## Usage
 
 1. Download or clone the project files.
-2. In the `script.py` file, replace the `username` variable with your GitHub username.
-3. Run the Python script:
+2. Run the Python script. It supports both a Graphical User Interface (GUI) and a Command Line Interface (CLI).
+
+### Using the GUI
+
+To launch the GUI, run the script without any arguments:
 
 ```bash
-python script.py
+python GitRepoInfosCSV.py
 ```
 
-4. After the script runs, a file named `github_repos.csv` will be generated in the project folder, containing the repository information for the specified user.
+A window will appear allowing you to enter the GitHub username and choose where to save the CSV file.
+
+### Using the CLI
+
+To use the script directly from the terminal, use the `--username` argument:
+
+```bash
+python GitRepoInfosCSV.py --username <username>
+```
+
+You can optionally specify a custom output filename using the `--output` argument:
+
+```bash
+python GitRepoInfosCSV.py --username <username> --output my_repos.csv
+```
+
+After the script runs, the CSV file will be generated in the specified location.
 
 ## Output File
 

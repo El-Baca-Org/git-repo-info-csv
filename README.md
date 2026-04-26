@@ -1,6 +1,6 @@
 # Download GitHub Repo Information in CSV Format
 
-This project is a simple Python script that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
+This project is a simple Python script with both a Graphical User Interface (GUI) and Command-Line Interface (CLI) that retrieves repository information for a specific GitHub user and saves it into a CSV file. The repository details are fetched via the GitHub API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
 
 ## Requirements
 
@@ -8,6 +8,7 @@ To run this script, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
+- `tkinter` library (included in standard Python installations, required for the GUI)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -17,15 +18,33 @@ pip install requests
 
 ## Usage
 
-1. Download or clone the project files.
-2. In the `script.py` file, replace the `username` variable with your GitHub username.
-3. Run the Python script:
+### Using the GUI
+
+To launch the application with a graphical interface:
 
 ```bash
-python script.py
+python GitRepoInfosCSV.py
 ```
 
-4. After the script runs, a file named `github_repos.csv` will be generated in the project folder, containing the repository information for the specified user.
+This will open a window where you can enter the GitHub username. Clicking "Fetch and Save" will generate the `github_repos.csv` file in the project folder.
+
+### Using the CLI
+
+To run the script directly from the command line, use the `--username` argument:
+
+```bash
+python GitRepoInfosCSV.py --username <github_username>
+```
+
+You can also specify a custom output file using the `--output` argument:
+
+```bash
+python GitRepoInfosCSV.py --username <github_username> --output my_repos.csv
+```
+
+### Using the Jupyter Notebook
+
+For an interactive experience, open the `GitRepoInfosCSV.ipynb` notebook. Run the cells sequentially, and it will prompt you for a GitHub username during execution.
 
 ## Output File
 

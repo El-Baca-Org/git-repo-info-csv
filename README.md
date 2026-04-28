@@ -19,38 +19,36 @@ pip install requests
 
 ## Usage
 
-### Using the GUI
+1. Download or clone the project files.
+2. You can use this script via the Command Line Interface (CLI) or a Graphical User Interface (GUI).
 
-To launch the application with a graphical interface:
+### Command Line Interface (CLI)
+
+Run the script providing the GitHub username as an argument:
+
+```bash
+python GitRepoInfosCSV.py --username <username>
+```
+
+You can also specify a custom output filename:
+
+```bash
+python GitRepoInfosCSV.py --username <username> --output my_repos.csv
+```
+
+### Graphical User Interface (GUI)
+
+Simply run the script without any arguments to launch the GUI:
 
 ```bash
 python GitRepoInfosCSV.py
 ```
 
-This will open a window where you can enter the GitHub username. Clicking "Fetch and Save" will generate the `github_repos.csv` file in the project folder.
+Enter the GitHub username and an optional output file name, then click "Fetch and Save".
 
-### Using the CLI
+3. After the script finishes, a CSV file will be generated in the project folder, containing the repository information for the specified user.
 
-To run the script directly from the command line, use the `--username` argument:
-
-```bash
-python GitRepoInfosCSV.py --username <github_username>
-```
-
-You can also specify a custom output file using the `--output` argument:
-
-### 1. GUI Mode (Graphical User Interface)
-If you run the script without any arguments, a graphical user interface will launch:
-```bash
-python GitRepoInfosCSV.py --username <github_username> --output my_repos.csv
-```
-- A window will appear prompting you to enter the GitHub username.
-- Click the "Fetch and Save Repos" button.
-- You will be prompted to select where to save the generated CSV file.
-
-### Using the Jupyter Notebook
-
-For an interactive experience, open the `GitRepoInfosCSV.ipynb` notebook. Run the cells sequentially, and it will prompt you for a GitHub username during execution.
+**Note:** The script makes unauthenticated requests to the GitHub API, which is subject to a rate limit of 60 requests per hour. If you encounter errors, you may need to wait for the limit to reset.
 
 ## Output File
 

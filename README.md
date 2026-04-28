@@ -24,18 +24,14 @@ pip install requests
 
 ## Usage
 
-### 1. GUI Mode
-Simply run the script without any arguments. A window will appear prompting you to enter the GitHub username and output filename.
+You can use the application either through the Graphical User Interface (GUI) or the Command Line Interface (CLI).
+
+### Graphical User Interface (GUI)
+
+To launch the GUI, simply run the script without any arguments:
 
 ```bash
 python GitRepoInfosCSV.py
-```
-
-### 2. CLI Mode
-You can specify the username and output filename directly from the command line:
-
-```bash
-python GitRepoInfosCSV.py --username <github_username> [--output custom_filename.csv]
 ```
 Example:
 ```bash
@@ -45,8 +41,24 @@ python GitRepoInfosCSV.py --username torvalds --output torvalds_repos.csv
 ### 3. Jupyter Notebook
 An interactive notebook is available in `GitRepoInfosCSV.ipynb`. Open it with Jupyter and run the cells. It will prompt you interactively for the GitHub username.
 
-## Important Note regarding GitHub API Rate Limits
-This script makes unauthenticated requests to the GitHub API. The API imposes a strict rate limit for unauthenticated users (currently 60 requests per hour per IP address). If you exceed this limit, the script will output an HTTP 403 error. You will need to wait for the limit to reset before making more requests.
+1. Enter your GitHub username in the text field.
+2. Click "Fetch and Save to CSV".
+3. Choose the location and filename to save the CSV file.
+4. A success message will appear once the data is downloaded.
+
+### Command Line Interface (CLI)
+
+You can also run the script directly from the command line:
+
+```bash
+python GitRepoInfosCSV.py --username <your_github_username>
+```
+
+You can optionally specify a custom output filename using the `--output` argument:
+
+```bash
+python GitRepoInfosCSV.py --username <your_github_username> --output my_repos.csv
+```
 
 ## Output File
 

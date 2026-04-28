@@ -1,9 +1,9 @@
 # Download GitHub Repo Information in CSV Format
 (Aşağıda Türkçe açıklamayı bulabilirsiniz / Turkish description is available below)
 
-This project is a simple Python tool that retrieves repository information of a specific GitHub user via the GitHub API and saves it into a CSV file. It provides an easy way to export and analyze repository details for any user.
+This project is a Python script that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the GitHub API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
 
-The project supports three different ways of usage: a Graphical User Interface (GUI), a Command Line Interface (CLI), and an interactive Jupyter Notebook.
+The script supports both a Command Line Interface (CLI) and a Graphical User Interface (GUI).
 
 ## Requirements
 
@@ -11,7 +11,7 @@ To run this tool, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
-- `tkinter` (usually comes pre-installed with Python, required for the GUI)
+- `tkinter` library (usually included with standard Python installations, required for the GUI)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -21,48 +21,45 @@ pip install requests
 
 ## Usage
 
-### 1. Graphical User Interface (GUI)
+You can use the script either from the Command Line Interface (CLI) or through a Graphical User Interface (GUI).
 
-The easiest way to use the script is via its graphical interface. If you run the script without any arguments, a simple window will appear:
+### GUI Usage
+
+If you run the script without any arguments, a graphical user interface will open. This allows you to easily input the username and optionally choose where to save the generated CSV file.
 
 ```bash
 python GitRepoInfosCSV.py
 ```
 
-- Enter the target **GitHub Username**.
-- (Optional) Provide a custom **Output File Name** (defaults to `github_repos.csv`).
-- Click the button to fetch and save the repository information.
+1. Enter the GitHub username.
+2. (Optional) Choose the output CSV file location.
+3. Click "Verileri Çek ve Kaydet" to fetch and save the repository data.
 
-### 2. Command Line Interface (CLI)
+### CLI Usage
 
-For automation or quick terminal usage, you can pass arguments directly to the script:
+You can run the script via the command line by providing arguments.
 
 ```bash
-# Basic usage (outputs to github_repos.csv)
-python GitRepoInfosCSV.py --username torvalds
-
-# Advanced usage (specify custom output file)
-python GitRepoInfosCSV.py --username torvalds --output linus_repos.csv
+python GitRepoInfosCSV.py --username <username> [--output <filename.csv>]
 ```
-A window will appear where you can enter the GitHub username and optionally choose the output CSV file location.
 
-### CLI Mode
-You can also run the script directly from the command line by providing the required `--username` argument. You can optionally specify the output file using the `--output` argument.
+#### Examples
 
-This will open a window where you can enter the GitHub username and optionally specify the output CSV filename. Click "Verileri Çek ve Kaydet" to fetch and save the repository information.
+Fetch repos for a user and save to the default `github_repos.csv`:
+```bash
+python GitRepoInfosCSV.py --username gitmuhammedalbayrak
+```
 
-## Interactive Notebook
+Fetch repos for a user and save to a custom file:
+```bash
+python GitRepoInfosCSV.py --username gitmuhammedalbayrak --output my_repos.csv
+```
 
-To see all available options, run: `python GitRepoInfosCSV.py --help`
+#### Options
 
-### 3. Jupyter Notebook
-
-For an interactive, step-by-step experience, you can use the provided Jupyter Notebook:
-
-1. Open `GitRepoInfosCSV.ipynb` in Jupyter Notebook or Google Colab.
-2. Run the cells sequentially.
-3. When prompted, type the GitHub username.
-4. The notebook will fetch the data and save it as `github_repos.csv` in the current working directory.
+- `-u, --username`: The GitHub username to fetch repos for. (Required)
+- `-o, --output`: The output CSV filename. (Optional, defaults to `github_repos.csv`)
+- `-h, --help`: Show the help message and exit.
 
 ## Output File
 
@@ -70,10 +67,14 @@ The generated CSV file will contain the following columns:
 
 - **Repo Adı (Repository Name)**: The name of the repository
 - **Açıklama (Description)**: The description of the repository
-- **Dil (Language)**: The primary programming language used in the repository
+- **Dil (Language)**: The programming language used in the repository
 - **Yıldız Sayısı (Star Count)**: The number of stars the repository has on GitHub
 - **Fork Sayısı (Fork Count)**: The number of forks of the repository
 - **URL**: The GitHub URL of the repository
+
+## Interactive Notebook
+
+The repository also includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`) designed for interactive usage.
 
 ## License
 

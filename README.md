@@ -1,14 +1,9 @@
 # Download GitHub Repo Information in CSV Format
 (Aşağıda Türkçe açıklamayı bulabilirsiniz / Turkish description is available below)
 
-This project is a Python tool that fetches GitHub repository information for a specific user via the GitHub API and saves it to a CSV file. The repository details are fetched via the API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
+This project is a simple Python script that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the GitHub API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
 
-## Features
-- **Command Line Interface (CLI):** Automate or quickly fetch data directly from your terminal.
-- **Graphical User Interface (GUI):** A user-friendly window for those who prefer not to use the terminal.
-- **Jupyter Notebook:** Included `.ipynb` notebook for interactive exploration.
-
-The script provides both a Graphical User Interface (GUI) and a Command Line Interface (CLI).
+The tool provides both a Command Line Interface (CLI) and a Graphical User Interface (GUI). It also includes a Jupyter Notebook for interactive usage.
 
 ## Requirements
 
@@ -16,7 +11,7 @@ To run this tool, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
-- `tkinter` library (usually included in the Python standard library, but on some Linux distributions you might need to install it with `sudo apt install python3-tk`)
+- `tkinter` (usually comes pre-installed with Python, required for the GUI)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -26,25 +21,33 @@ pip install requests
 
 ## Usage
 
-1. Download or clone the project files.
+You can use the script in either GUI mode or CLI mode.
 
-### CLI Mode
-You can use the command-line interface to quickly fetch repository information by specifying the `--username` argument. You can optionally specify an output file with `--output`.
-
-```bash
-python GitRepoInfosCSV.py --username torvalds --output torvalds_repos.csv
-```
-
-### GUI Mode
-If you run the script without any arguments, it will launch a Graphical User Interface (GUI).
-
+### 1. GUI Mode (Graphical User Interface)
+If you run the script without any arguments, a graphical user interface will launch:
 ```bash
 python GitRepoInfosCSV.py
 ```
-This will open a window where you can input the GitHub username and the desired output filename, and then click a button to fetch and save the data.
+- A window will appear prompting you to enter the GitHub username.
+- Click the "Fetch and Save Repos" button.
+- You will be prompted to select where to save the generated CSV file.
 
-### Jupyter Notebook
-The project also includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`). When you run the notebook cells, you will be interactively prompted to enter a GitHub username.
+### 2. CLI Mode (Command Line Interface)
+If you prefer the command line, you can pass arguments directly to the script:
+```bash
+python GitRepoInfosCSV.py --username <github_username>
+```
+You can also specify a custom output filename:
+```bash
+python GitRepoInfosCSV.py --username <github_username> --output my_custom_repos.csv
+```
+For more details on CLI arguments, you can use the help flag:
+```bash
+python GitRepoInfosCSV.py --help
+```
+
+### 3. Jupyter Notebook
+The project includes a `GitRepoInfosCSV.ipynb` file for interactive use within Jupyter environments (like Jupyter Lab or Google Colab). Simply open the notebook, and it will prompt you for a username.
 
 ## Output File
 
@@ -57,9 +60,10 @@ The CSV file will contain the following columns (headers are in Turkish):
 - **Fork Sayısı**: The number of forks of the repository
 - **URL**: The GitHub URL of the repository
 
-## Rate Limiting
+Note: The column headers in the CSV file are in Turkish to maintain backward compatibility, while the script interface and documentation are in English.
 
-This script makes unauthenticated requests to the GitHub API, which is subject to a rate limit of 60 requests per hour. If you encounter a 403 error, you may have exceeded this limit and will need to wait for it to reset.
+## Rate Limits
+Note that this tool makes unauthenticated requests to the GitHub API, which limits you to 60 requests per hour. If you exceed this limit, you may encounter an error (such as a 403 error) and will need to wait for the limit to reset.
 
 ## License
 

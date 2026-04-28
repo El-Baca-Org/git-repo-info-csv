@@ -2,26 +2,61 @@
 
 import requests
 import csv
+import argparse
+import sys
 
-# GitHub kullanıcı adını buraya yaz
-username = "gitmuhammedalbayrak"
+def main():
+    parser = argparse.ArgumentParser(description="Fetch GitHub repositories for a specific user and save them to a CSV file.")
+    parser.add_argument("--username", "-u", required=True, help="GitHub username")
+    parser.add_argument("--output", "-o", default="github_repos.csv", help="Output CSV file name (default: github_repos.csv)")
 
-# GitHub API URL'si
-url = f"https://api.github.com/users/{username}/repos"
+    args = parser.parse_args()
+    username = args.username
+    output_file = args.output
 
-# API'den verileri çek
-response = requests.get(url)
-repos = response.json()
+    # GitHub API URL'si
+    url = f"https://api.github.com/users/{username}/repos"
 
-# CSV dosyasına yazma
-with open('github_repos.csv', mode='w', newline='', encoding='utf-8') as file:
-    writer = csv.writer(file)
+    # API'den verileri çek
+    try:
+        response = requests.get(url)
+        response.raise_for_status() # Check for HTTP errors
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data from GitHub API: {e}", file=sys.stderr)
+        sys.exit(1)
 
-    # CSV başlıkları
-    writer.writerow(['Repo Adı', 'Açıklama', 'Dil', 'Yıldız Sayısı', 'Fork Sayısı', 'URL'])
+    repos = response.json()
 
-    # Her repo için bilgileri yaz
-    for repo in repos:
-        writer.writerow([repo['name'], repo['description'], repo['language'], repo['stargazers_count'], repo['forks_count'], repo['html_url']])
+    # Eğer kullanıcı bulunamazsa (veya repo yoksa)
+    if not isinstance(repos, list):
+         if isinstance(repos, dict) and repos.get('message') == 'Not Found':
+              print(f"User '{username}' not found on GitHub.", file=sys.stderr)
+         else:
+              print(f"Unexpected response from API.", file=sys.stderr)
+         sys.exit(1)
 
-print("Repo bilgileri github_repos.csv dosyasına yazıldı.")
+    # CSV dosyasına yazma
+    try:
+        with open(output_file, mode='w', newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
+
+            # CSV başlıkları
+            writer.writerow(['Repo Adı', 'Açıklama', 'Dil', 'Yıldız Sayısı', 'Fork Sayısı', 'URL'])
+
+            # Her repo için bilgileri yaz
+            for repo in repos:
+                writer.writerow([
+                    repo.get('name', ''),
+                    repo.get('description', ''),
+                    repo.get('language', ''),
+                    repo.get('stargazers_count', 0),
+                    repo.get('forks_count', 0),
+                    repo.get('html_url', '')
+                ])
+        print(f"Repo bilgileri {output_file} dosyasına başarıyla yazıldı.")
+    except IOError as e:
+        print(f"Error writing to file {output_file}: {e}", file=sys.stderr)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

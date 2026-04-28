@@ -21,45 +21,35 @@ pip install requests
 
 ## Usage
 
-You can use the script either from the Command Line Interface (CLI) or through a Graphical User Interface (GUI).
+You can use the script via a Command-Line Interface (CLI) or a Graphical User Interface (GUI).
 
-### GUI Usage
-
-If you run the script without any arguments, a graphical user interface will open. This allows you to easily input the username and optionally choose where to save the generated CSV file.
+### GUI Mode
+To launch the Graphical User Interface, run the script without any arguments:
 
 ```bash
 python GitRepoInfosCSV.py
 ```
+This will open a window where you can enter the GitHub username and the desired output CSV filename.
 
-1. Enter the GitHub username.
-2. (Optional) Choose the output CSV file location.
-3. Click "Verileri Çek ve Kaydet" to fetch and save the repository data.
-
-### CLI Usage
-
-You can run the script via the command line by providing arguments.
+### CLI Mode
+To use the Command-Line Interface, run the script with the `--username` argument:
 
 ```bash
-python GitRepoInfosCSV.py --username <username> [--output <filename.csv>]
+python GitRepoInfosCSV.py --username <github_username>
 ```
 
-#### Examples
+You can also optionally specify an output filename using the `--output` argument:
 
-Fetch repos for a user and save to the default `github_repos.csv`:
 ```bash
-python GitRepoInfosCSV.py --username gitmuhammedalbayrak
+python GitRepoInfosCSV.py --username <github_username> --output my_repos.csv
 ```
 
-Fetch repos for a user and save to a custom file:
+To see all available arguments, use:
 ```bash
-python GitRepoInfosCSV.py --username gitmuhammedalbayrak --output my_repos.csv
+python GitRepoInfosCSV.py --help
 ```
 
-#### Options
-
-- `-u, --username`: The GitHub username to fetch repos for. (Required)
-- `-o, --output`: The output CSV filename. (Optional, defaults to `github_repos.csv`)
-- `-h, --help`: Show the help message and exit.
+4. After the script runs successfully, the corresponding CSV file will be generated in your specified output location (default: `github_repos.csv`), containing the repository information for the specified user.
 
 ## Output File
 

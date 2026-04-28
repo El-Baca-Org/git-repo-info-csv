@@ -7,114 +7,93 @@ import sys
 import tkinter as tk
 from tkinter import messagebox, filedialog
 
-def fetch_and_save_repos(username, output_file="github_repos.csv"):
-    """
-    Fetches GitHub repository information for the given user and saves it to a CSV file.
-    """
+def fetch_and_save_repos(username, output_file='github_repos.csv'):
+    # GitHub API URL'si
     url = f"https://api.github.com/users/{username}/repos"
 
     try:
+        # API'den verileri çek
         response = requests.get(url)
         response.raise_for_status()
         repos = response.json()
-    except requests.exceptions.RequestException as e:
-        return False, f"Failed to fetch data for user '{username}': {e}"
 
-    if not repos:
-        return False, f"No repositories found for user '{username}' or user does not exist."
-
-    try:
+        # CSV dosyasına yazma
         with open(output_file, mode='w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
+
+            # CSV başlıkları
             writer.writerow(['Repo Adı', 'Açıklama', 'Dil', 'Yıldız Sayısı', 'Fork Sayısı', 'URL'])
 
+            # Her repo için bilgileri yaz
             for repo in repos:
                 writer.writerow([
-                    repo.get('name', ''),
-                    repo.get('description', ''),
-                    repo.get('language', ''),
-                    repo.get('stargazers_count', 0),
-                    repo.get('forks_count', 0),
-                    repo.get('html_url', '')
+                    repo.get('name'),
+                    repo.get('description'),
+                    repo.get('language'),
+                    repo.get('stargazers_count'),
+                    repo.get('forks_count'),
+                    repo.get('html_url')
                 ])
-        return True, f"Repo bilgileri {output_file} dosyasına yazıldı."
-    except IOError as e:
-        return False, f"Failed to write to file '{output_file}': {e}"
+
+        print(f"Repo bilgileri {output_file} dosyasına yazıldı.")
+        return True
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
 
 def run_gui():
-    """
-    Launches a tkinter GUI to input username and select output file.
-    """
-    def on_submit():
+    import tkinter as tk
+    from tkinter import messagebox
+
+    def on_fetch():
         username = entry_username.get().strip()
+        output_file = entry_output.get().strip()
+
         if not username:
-            messagebox.showwarning("Uyarı", "Lütfen bir GitHub kullanıcı adı girin.")
+            messagebox.showerror("Error", "Please enter a GitHub username.")
             return
 
-        output_file = entry_output.get().strip()
         if not output_file:
-            output_file = "github_repos.csv"
+            output_file = 'github_repos.csv'
 
-        success, message = fetch_and_save_repos(username, output_file)
+        success = fetch_and_save_repos(username, output_file)
         if success:
-            messagebox.showinfo("Başarılı", message)
+            messagebox.showinfo("Success", f"Repository information saved to {output_file}.")
         else:
-            messagebox.showerror("Hata", message)
-
-    def browse_file():
-        filename = filedialog.asksaveasfilename(
-            defaultextension=".csv",
-            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
-            initialfile="github_repos.csv",
-            title="Dosyayı Kaydet"
-        )
-        if filename:
-            entry_output.delete(0, tk.END)
-            entry_output.insert(0, filename)
+            messagebox.showerror("Error", "Failed to fetch repository information. Check console for details.")
 
     root = tk.Tk()
-    root.title("GitHub Repo Bilgisi İndirici")
-    root.geometry("450x200")
-    root.resizable(False, False)
+    root.title("GitHub Repo Fetcher")
 
-    tk.Label(root, text="GitHub Kullanıcı Adı:").pack(pady=(15, 5))
-    entry_username = tk.Entry(root, width=40)
-    entry_username.pack()
+    tk.Label(root, text="GitHub Username:").grid(row=0, column=0, padx=10, pady=10, sticky='w')
+    entry_username = tk.Entry(root, width=30)
+    entry_username.grid(row=0, column=1, padx=10, pady=10)
 
-    tk.Label(root, text="Çıktı Dosyası (Opsiyonel):").pack(pady=(10, 5))
-
-    frame_output = tk.Frame(root)
-    frame_output.pack()
-
-    entry_output = tk.Entry(frame_output, width=30)
+    tk.Label(root, text="Output CSV Filename:").grid(row=1, column=0, padx=10, pady=10, sticky='w')
+    entry_output = tk.Entry(root, width=30)
     entry_output.insert(0, "github_repos.csv")
-    entry_output.pack(side=tk.LEFT, padx=(0, 5))
+    entry_output.grid(row=1, column=1, padx=10, pady=10)
 
-    btn_browse = tk.Button(frame_output, text="Gözat", command=browse_file)
-    btn_browse.pack(side=tk.LEFT)
-
-    btn_submit = tk.Button(root, text="Verileri Çek ve Kaydet", command=on_submit, bg="#4CAF50", fg="white", font=("Arial", 10, "bold"))
-    btn_submit.pack(pady=20)
+    btn_fetch = tk.Button(root, text="Fetch and Save", command=on_fetch)
+    btn_fetch.grid(row=2, column=0, columnspan=2, pady=20)
 
     root.mainloop()
 
-def main():
-    # If there are arguments, run CLI mode. Otherwise, GUI mode.
+if __name__ == "__main__":
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(description="Fetch GitHub repository information for a user and save it to a CSV file.")
+    parser.add_argument("--username", help="GitHub username to fetch repositories for.", required=False)
+    parser.add_argument("--output", help="Output CSV filename.", default="github_repos.csv", required=False)
+
+    # If arguments are provided (other than the script name itself), use CLI mode.
+    # Otherwise, launch the GUI.
     if len(sys.argv) > 1:
-        parser = argparse.ArgumentParser(description="Download GitHub Repo Information in CSV Format")
-        parser.add_argument("--username", "-u", type=str, required=True, help="GitHub username to fetch repos for.")
-        parser.add_argument("--output", "-o", type=str, default="github_repos.csv", help="Output CSV filename (default: github_repos.csv)")
-
         args = parser.parse_args()
-
-        success, message = fetch_and_save_repos(args.username, args.output)
-        if success:
-            print(f"Başarılı: {message}")
+        if args.username:
+            fetch_and_save_repos(args.username, args.output)
         else:
-            print(f"Hata: {message}", file=sys.stderr)
-            sys.exit(1)
+            parser.print_help()
     else:
         run_gui()
-
-if __name__ == "__main__":
-    main()

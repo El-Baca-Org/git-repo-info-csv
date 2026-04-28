@@ -1,8 +1,11 @@
 # Download GitHub Repo Information in CSV Format
+(Aşağıda Türkçe açıklamayı bulabilirsiniz / Turkish description is available below)
 
 This project is a Python tool that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the GitHub API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
 
 It supports both a Command Line Interface (CLI) and a Graphical User Interface (GUI).
+
+The tool supports both a Graphical User Interface (GUI) and a Command-Line Interface (CLI).
 
 ## Requirements
 
@@ -48,6 +51,10 @@ If you prefer a visual interface, you can run the script without any arguments:
 ```bash
 python GitRepoInfosCSV.py
 ```
+A window will appear where you can enter the GitHub username and optionally choose the output CSV file location.
+
+### CLI Mode
+You can also run the script directly from the command line by providing the required `--username` argument. You can optionally specify the output file using the `--output` argument.
 
 This will open a window where you can enter the GitHub username and optionally specify the output CSV filename. Click "Verileri Çek ve Kaydet" to fetch and save the repository information.
 

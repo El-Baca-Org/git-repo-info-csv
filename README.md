@@ -21,7 +21,28 @@ pip install requests
 
 ## Usage
 
-You can use the script in either GUI mode or CLI mode.
+1. Download or clone the project files.
+2. Run the Python script. It supports both a Graphical User Interface (GUI) and a Command Line Interface (CLI).
+
+### Using the GUI
+
+To launch the GUI, run the script without any arguments:
+
+```bash
+python GitRepoInfosCSV.py
+```
+
+A window will appear allowing you to enter the GitHub username and choose where to save the CSV file.
+
+### Using the CLI
+
+To use the script directly from the terminal, use the `--username` argument:
+
+```bash
+python GitRepoInfosCSV.py --username <username>
+```
+
+You can optionally specify a custom output filename using the `--output` argument:
 
 ### 1. GUI Mode (Graphical User Interface)
 If you run the script without any arguments, a graphical user interface will launch:
@@ -43,11 +64,10 @@ python GitRepoInfosCSV.py --username <github_username> --output my_custom_repos.
 ```
 For more details on CLI arguments, you can use the help flag:
 ```bash
-python GitRepoInfosCSV.py --help
+python GitRepoInfosCSV.py --username <username> --output my_repos.csv
 ```
 
-### 3. Jupyter Notebook
-The project includes a `GitRepoInfosCSV.ipynb` file for interactive use within Jupyter environments (like Jupyter Lab or Google Colab). Simply open the notebook, and it will prompt you for a username.
+After the script runs, the CSV file will be generated in the specified location.
 
 ## Output File
 

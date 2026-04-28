@@ -3,106 +3,93 @@
 import requests
 import csv
 import argparse
-import sys
 import tkinter as tk
-from tkinter import messagebox, filedialog
+from tkinter import filedialog, messagebox, ttk
 
-def fetch_and_save_repos(username, output_file):
-    # GitHub API URL
+def fetch_repos(username):
     url = f"https://api.github.com/users/{username}/repos"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        raise Exception(f"User '{username}' not found.")
+    elif response.status_code == 403:
+        raise Exception("API rate limit exceeded. Please try again later.")
+    else:
+        raise Exception(f"Failed to fetch repositories. Status code: {response.status_code}")
 
-    try:
-        # Fetch data from API
-        response = requests.get(url)
-        response.raise_for_status()  # Check for errors like 403 or 404
-        repos = response.json()
-
-        # Check if the user has no repos or we got an unexpected response
-        if not isinstance(repos, list):
-            return False, f"Unexpected response from GitHub API. Please check the username."
-
-        # Write to CSV file
-        with open(output_file, mode='w', newline='', encoding='utf-8') as file:
-            writer = csv.writer(file)
-
-            # CSV headers (in Turkish for backward compatibility)
-            writer.writerow(['Repo Adı', 'Açıklama', 'Dil', 'Yıldız Sayısı', 'Fork Sayısı', 'URL'])
-
-            # Write repo info
-            for repo in repos:
-                writer.writerow([
-                    repo.get('name', ''),
-                    repo.get('description', ''),
-                    repo.get('language', ''),
-                    repo.get('stargazers_count', 0),
-                    repo.get('forks_count', 0),
-                    repo.get('html_url', '')
-                ])
-
-        return True, f"Repository info successfully written to {output_file}."
-    except requests.exceptions.HTTPError as e:
-        return False, f"HTTP Error: {e}"
-    except requests.exceptions.RequestException as e:
-        return False, f"Request Error: {e}"
-    except Exception as e:
-        return False, f"An unexpected error occurred: {e}"
-
+def save_to_csv(repos, output_file='github_repos.csv'):
+    with open(output_file, mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Repo Adı', 'Açıklama', 'Dil', 'Yıldız Sayısı', 'Fork Sayısı', 'URL'])
+        for repo in repos:
+            writer.writerow([
+                repo.get('name'),
+                repo.get('description'),
+                repo.get('language'),
+                repo.get('stargazers_count'),
+                repo.get('forks_count'),
+                repo.get('html_url')
+            ])
+    return output_file
 
 def run_gui():
-    def download_data():
-        username = username_entry.get().strip()
+    def submit():
+        username = entry_username.get().strip()
         if not username:
             messagebox.showwarning("Input Error", "Please enter a GitHub username.")
             return
 
-        output_file = filedialog.asksaveasfilename(
-            defaultextension=".csv",
-            initialfile="github_repos.csv",
-            title="Save CSV as",
-            filetypes=(("CSV files", "*.csv"), ("All files", "*.*"))
-        )
+        try:
+            repos = fetch_repos(username)
 
-        if not output_file:
-            return  # User cancelled the save dialog
+            output_file = filedialog.asksaveasfilename(
+                defaultextension=".csv",
+                filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+                initialfile="github_repos.csv",
+                title="Save CSV File As"
+            )
 
-        success, message = fetch_and_save_repos(username, output_file)
-        if success:
-            messagebox.showinfo("Success", message)
-        else:
-            messagebox.showerror("Error", message)
+            if output_file:
+                save_to_csv(repos, output_file)
+                messagebox.showinfo("Success", f"Repo info successfully written to {output_file}.")
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
 
     root = tk.Tk()
-    root.title("GitHub Repo Fetcher")
+    root.title("GitHub Repo Info Downloader")
     root.geometry("400x150")
 
-    tk.Label(root, text="GitHub Username:").pack(pady=10)
+    frame = ttk.Frame(root, padding="10")
+    frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
-    username_entry = tk.Entry(root, width=30)
-    username_entry.pack(pady=5)
+    label_username = ttk.Label(frame, text="GitHub Username:")
+    label_username.grid(row=0, column=0, pady=10, sticky=tk.W)
 
-    download_button = tk.Button(root, text="Fetch and Save Repos", command=download_data)
-    download_button.pack(pady=10)
+    entry_username = ttk.Entry(frame, width=30)
+    entry_username.grid(row=0, column=1, pady=10, sticky=tk.W)
+
+    btn_download = ttk.Button(frame, text="Download", command=submit)
+    btn_download.grid(row=1, column=0, columnspan=2, pady=10)
 
     root.mainloop()
 
-
-def run_cli():
-    parser = argparse.ArgumentParser(description="Fetch GitHub repositories for a user and save to CSV.")
-    parser.add_argument("--username", required=True, help="GitHub username to fetch repositories for")
-    parser.add_argument("--output", default="github_repos.csv", help="Output CSV filename (default: github_repos.csv)")
+def main():
+    parser = argparse.ArgumentParser(description="Download GitHub Repo Information in CSV Format")
+    parser.add_argument("--username", help="GitHub username")
+    parser.add_argument("--output", default="github_repos.csv", help="Output CSV filename")
 
     args = parser.parse_args()
 
-    success, message = fetch_and_save_repos(args.username, args.output)
-    if success:
-        print(message)
-    else:
-        print(f"Error: {message}", file=sys.stderr)
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        run_cli()
+    if args.username:
+        try:
+            repos = fetch_repos(args.username)
+            output_file = save_to_csv(repos, args.output)
+            print(f"Repo bilgileri {output_file} dosyasına yazıldı.")
+        except Exception as e:
+            print(f"Error: {e}")
     else:
         run_gui()
+
+if __name__ == "__main__":
+    main()

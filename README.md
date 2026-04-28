@@ -20,35 +20,32 @@ pip install requests
 ## Usage
 
 1. Download or clone the project files.
-2. You can use this script via the Command Line Interface (CLI) or a Graphical User Interface (GUI).
-
-### Command Line Interface (CLI)
-
-Run the script providing the GitHub username as an argument:
-
-```bash
-python GitRepoInfosCSV.py --username <username>
-```
-
-You can also specify a custom output filename:
-
-```bash
-python GitRepoInfosCSV.py --username <username> --output my_repos.csv
-```
+2. Run the Python script.
 
 ### Graphical User Interface (GUI)
 
-Simply run the script without any arguments to launch the GUI:
+To open the interactive Graphical User Interface, simply run the script without any arguments:
 
 ```bash
 python GitRepoInfosCSV.py
 ```
 
-Enter the GitHub username and an optional output file name, then click "Fetch and Save".
+This will open a window where you can enter the GitHub username and select the output CSV filename.
 
-3. After the script finishes, a CSV file will be generated in the project folder, containing the repository information for the specified user.
+### Command Line Interface (CLI)
 
-**Note:** The script makes unauthenticated requests to the GitHub API, which is subject to a rate limit of 60 requests per hour. If you encounter errors, you may need to wait for the limit to reset.
+You can also run the script directly from the command line by providing arguments:
+
+```bash
+python GitRepoInfosCSV.py --username <github_username> [--output <filename.csv>]
+```
+
+Example:
+```bash
+python GitRepoInfosCSV.py --username octocat --output octocat_repos.csv
+```
+
+After the script runs, a CSV file will be generated containing the repository information for the specified user.
 
 ## Output File
 

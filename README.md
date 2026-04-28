@@ -8,13 +8,15 @@ This project is a Python tool that fetches GitHub repository information for a s
 - **Graphical User Interface (GUI):** A user-friendly window for those who prefer not to use the terminal.
 - **Jupyter Notebook:** Included `.ipynb` notebook for interactive exploration.
 
+The script provides both a Graphical User Interface (GUI) and a Command Line Interface (CLI).
+
 ## Requirements
 
 To run this tool, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
-- `tkinter` library (usually included with standard Python installations, needed for the GUI)
+- `tkinter` library (for the GUI, usually included with Python standard library)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -24,45 +26,44 @@ pip install requests
 
 ## Usage
 
-You can use the application either through the Graphical User Interface (GUI) or the Command Line Interface (CLI).
+You can use this tool either through the GUI, the CLI, or interactively via the provided Jupyter Notebook.
 
-### Graphical User Interface (GUI)
+**Note:** The script uses the unauthenticated GitHub API, which has a rate limit of 60 requests per hour per IP address.
 
-To launch the GUI, simply run the script without any arguments:
+### 1. Graphical User Interface (GUI)
+
+If you run the script without any arguments, a simple GUI will open:
 
 ```bash
 python GitRepoInfosCSV.py
 ```
-Example:
-```bash
-python GitRepoInfosCSV.py --username torvalds --output torvalds_repos.csv
-```
 
-### 3. Jupyter Notebook
-An interactive notebook is available in `GitRepoInfosCSV.ipynb`. Open it with Jupyter and run the cells. It will prompt you interactively for the GitHub username.
+- Enter the GitHub username in the text field.
+- Click "Fetch & Save Repos".
+- Choose where you want to save the CSV file.
 
-1. Enter your GitHub username in the text field.
-2. Click "Fetch and Save to CSV".
-3. Choose the location and filename to save the CSV file.
-4. A success message will appear once the data is downloaded.
+### 2. Command Line Interface (CLI)
 
-### Command Line Interface (CLI)
-
-You can also run the script directly from the command line:
+You can also use the script from the command line by providing arguments:
 
 ```bash
-python GitRepoInfosCSV.py --username <your_github_username>
+python GitRepoInfosCSV.py --username <github_username>
 ```
 
-You can optionally specify a custom output filename using the `--output` argument:
+You can optionally specify the output filename using the `--output` flag:
 
 ```bash
-python GitRepoInfosCSV.py --username <your_github_username> --output my_repos.csv
+python GitRepoInfosCSV.py --username <github_username> --output my_repos.csv
 ```
+
+### 3. Jupyter Notebook (Interactive)
+
+The repository includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`) designed for interactive usage.
+When you run the notebook, it will prompt you to enter the GitHub username and will fetch and save the repository data accordingly.
 
 ## Output File
 
-The CSV file will contain the following columns (headers are kept in Turkish for backward compatibility):
+The CSV file will contain the following columns (headers are in Turkish):
 
 - **Repo Adı**: The name of the repository
 - **Açıklama**: The description of the repository

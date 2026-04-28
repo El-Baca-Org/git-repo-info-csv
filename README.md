@@ -1,15 +1,15 @@
 # Download GitHub Repo Information in CSV Format
 (Aşağıda Türkçe açıklamayı bulabilirsiniz / Turkish description is available below)
 
-This project is a Python tool that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the GitHub API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
+This project is a Python tool that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The script features both a Command Line Interface (CLI) and a Graphical User Interface (GUI) for ease of use.
 
 ## Requirements
 
 To run this tool, you'll need the following:
 
 - Python 3.x
-- `requests` library (to fetch data from the API)
-- `tkinter` library (standard in most Python distributions, for GUI)
+- `requests` library
+- `tkinter` (usually comes pre-installed with Python, but might need separate installation on some Linux distributions)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -19,7 +19,21 @@ pip install requests
 
 ## Usage
 
-You can use the tool in three different ways: Graphical User Interface (GUI), Command Line Interface (CLI), or via the Jupyter Notebook.
+You can use this tool either through the terminal (CLI) or with a user-friendly graphical interface (GUI).
+
+### Graphical User Interface (GUI)
+
+If you run the script without any arguments, it will launch the GUI:
+
+```bash
+python GitRepoInfosCSV.py
+```
+
+A window will appear where you can enter the GitHub username and the desired output CSV filename.
+
+### Command Line Interface (CLI)
+
+You can use command line arguments to quickly fetch and save the data without the GUI:
 
 ### 1. Graphical User Interface (GUI)
 
@@ -41,16 +55,24 @@ python GitRepoInfosCSV.py --username <github_username> [--output <custom_filenam
 
 For example:
 ```bash
-python GitRepoInfosCSV.py --username octocat --output octocat_repos.csv
+python GitRepoInfosCSV.py --username <github_username> [--output <filename.csv>]
 ```
 
-### 3. Jupyter Notebook (Interactive Usage)
+**Example:**
 
-If you prefer an interactive notebook environment, you can use `GitRepoInfosCSV.ipynb`. Open the notebook in Jupyter or Google Colab, run the cells, and it will prompt you to enter the GitHub username.
+```bash
+python GitRepoInfosCSV.py --username torvalds --output torvalds_repos.csv
+```
+
+If you don't specify the `--output` argument, the data will be saved to `github_repos.csv` by default.
+
+### Interactive Notebook
+
+The repository also includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`). When run, it will interactively prompt you for a GitHub username and generate the CSV file.
 
 ## Output File
 
-The CSV file will contain the following columns (headers are in Turkish for backward compatibility):
+The output CSV file will have Turkish headers for backward compatibility. The columns are:
 
 - **Repo Adı**: The name of the repository
 - **Açıklama**: The description of the repository
@@ -59,9 +81,9 @@ The CSV file will contain the following columns (headers are in Turkish for back
 - **Fork Sayısı**: The number of forks of the repository
 - **URL**: The GitHub URL of the repository
 
-## API Limits
+## Rate Limiting
 
-Please note that this tool makes unauthenticated requests to the GitHub API, which is subject to a strict rate limit (60 requests per hour per IP address). If you exceed this limit, you may encounter permission errors (403 Forbidden) and will need to wait for the limit to reset.
+This script makes unauthenticated requests to the GitHub API, which is subject to a rate limit of 60 requests per hour. If you encounter a 403 error, you may have exceeded this limit and will need to wait for it to reset.
 
 ## License
 

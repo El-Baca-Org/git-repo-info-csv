@@ -1,15 +1,20 @@
 # Download GitHub Repo Information in CSV Format
 (Aşağıda Türkçe açıklamayı bulabilirsiniz / Turkish description is available below)
 
-This project is a Python tool that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The script features both a Command Line Interface (CLI) and a Graphical User Interface (GUI) for ease of use.
+This project is a Python tool that fetches GitHub repository information for a specific user via the GitHub API and saves it to a CSV file. The repository details are fetched via the API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
+
+## Features
+- **Command Line Interface (CLI):** Automate or quickly fetch data directly from your terminal.
+- **Graphical User Interface (GUI):** A user-friendly window for those who prefer not to use the terminal.
+- **Jupyter Notebook:** Included `.ipynb` notebook for interactive exploration.
 
 ## Requirements
 
 To run this tool, you'll need the following:
 
 - Python 3.x
-- `requests` library
-- `tkinter` (usually comes pre-installed with Python, but might need separate installation on some Linux distributions)
+- `requests` library (to fetch data from the API)
+- `tkinter` library (usually included with standard Python installations, needed for the GUI)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -19,60 +24,33 @@ pip install requests
 
 ## Usage
 
-You can use this tool either through the terminal (CLI) or with a user-friendly graphical interface (GUI).
-
-### Graphical User Interface (GUI)
-
-If you run the script without any arguments, it will launch the GUI:
+### 1. GUI Mode
+Simply run the script without any arguments. A window will appear prompting you to enter the GitHub username and output filename.
 
 ```bash
 python GitRepoInfosCSV.py
 ```
 
-A window will appear where you can enter the GitHub username and the desired output CSV filename.
-
-### Command Line Interface (CLI)
-
-You can use command line arguments to quickly fetch and save the data without the GUI:
-
-### 1. Graphical User Interface (GUI)
-
-To launch the graphical interface, run the script without any arguments:
+### 2. CLI Mode
+You can specify the username and output filename directly from the command line:
 
 ```bash
-python GitRepoInfosCSV.py
+python GitRepoInfosCSV.py --username <github_username> [--output custom_filename.csv]
 ```
-
-A window will appear where you can enter the GitHub username and the desired output filename. Click "Fetch and Save" to download the data.
-
-### 2. Command Line Interface (CLI)
-
-You can use the command line arguments to quickly fetch data without launching the GUI.
-
-```bash
-python GitRepoInfosCSV.py --username <github_username> [--output <custom_filename.csv>]
-```
-
-For example:
-```bash
-python GitRepoInfosCSV.py --username <github_username> [--output <filename.csv>]
-```
-
-**Example:**
-
+Example:
 ```bash
 python GitRepoInfosCSV.py --username torvalds --output torvalds_repos.csv
 ```
 
-If you don't specify the `--output` argument, the data will be saved to `github_repos.csv` by default.
+### 3. Jupyter Notebook
+An interactive notebook is available in `GitRepoInfosCSV.ipynb`. Open it with Jupyter and run the cells. It will prompt you interactively for the GitHub username.
 
-### Interactive Notebook
-
-The repository also includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`). When run, it will interactively prompt you for a GitHub username and generate the CSV file.
+## Important Note regarding GitHub API Rate Limits
+This script makes unauthenticated requests to the GitHub API. The API imposes a strict rate limit for unauthenticated users (currently 60 requests per hour per IP address). If you exceed this limit, the script will output an HTTP 403 error. You will need to wait for the limit to reset before making more requests.
 
 ## Output File
 
-The output CSV file will have Turkish headers for backward compatibility. The columns are:
+The CSV file will contain the following columns (headers are kept in Turkish for backward compatibility):
 
 - **Repo Adı**: The name of the repository
 - **Açıklama**: The description of the repository

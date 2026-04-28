@@ -1,19 +1,17 @@
 # Download GitHub Repo Information in CSV Format
 (Aşağıda Türkçe açıklamayı bulabilirsiniz / Turkish description is available below)
 
-This project is a Python tool that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the GitHub API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
+This project is a simple Python tool that retrieves repository information of a specific GitHub user via the GitHub API and saves it into a CSV file. It provides an easy way to export and analyze repository details for any user.
 
-It supports both a Command Line Interface (CLI) and a Graphical User Interface (GUI).
-
-The tool supports both a Graphical User Interface (GUI) and a Command-Line Interface (CLI).
+The project supports three different ways of usage: a Graphical User Interface (GUI), a Command Line Interface (CLI), and an interactive Jupyter Notebook.
 
 ## Requirements
 
-To run this script, you'll need the following:
+To run this tool, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
-- `tkinter` (comes standard with most Python installations, used for the GUI)
+- `tkinter` (usually comes pre-installed with Python, required for the GUI)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -23,33 +21,28 @@ pip install requests
 
 ## Usage
 
-### Using the Command Line Interface (CLI)
+### 1. Graphical User Interface (GUI)
 
-1. Download or clone the project files.
-2. Run the script using the following command structure:
-
-```bash
-python GitRepoInfosCSV.py --username <github_username> [--output <custom_filename.csv>]
-```
-
-**Examples:**
-
-- Save to the default `github_repos.csv`:
-  ```bash
-  python GitRepoInfosCSV.py --username octocat
-  ```
-
-- Save to a custom file:
-  ```bash
-  python GitRepoInfosCSV.py --username octocat --output my_repos.csv
-  ```
-
-### Using the Graphical User Interface (GUI)
-
-If you prefer a visual interface, you can run the script without any arguments:
+The easiest way to use the script is via its graphical interface. If you run the script without any arguments, a simple window will appear:
 
 ```bash
 python GitRepoInfosCSV.py
+```
+
+- Enter the target **GitHub Username**.
+- (Optional) Provide a custom **Output File Name** (defaults to `github_repos.csv`).
+- Click the button to fetch and save the repository information.
+
+### 2. Command Line Interface (CLI)
+
+For automation or quick terminal usage, you can pass arguments directly to the script:
+
+```bash
+# Basic usage (outputs to github_repos.csv)
+python GitRepoInfosCSV.py --username torvalds
+
+# Advanced usage (specify custom output file)
+python GitRepoInfosCSV.py --username torvalds --output linus_repos.csv
 ```
 A window will appear where you can enter the GitHub username and optionally choose the output CSV file location.
 
@@ -60,18 +53,27 @@ This will open a window where you can enter the GitHub username and optionally s
 
 ## Interactive Notebook
 
-The repository also includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`) designed for interactive usage. You can run the cells in the notebook to prompt for a GitHub username and utilize the core logic to fetch and save repository data.
+To see all available options, run: `python GitRepoInfosCSV.py --help`
+
+### 3. Jupyter Notebook
+
+For an interactive, step-by-step experience, you can use the provided Jupyter Notebook:
+
+1. Open `GitRepoInfosCSV.ipynb` in Jupyter Notebook or Google Colab.
+2. Run the cells sequentially.
+3. When prompted, type the GitHub username.
+4. The notebook will fetch the data and save it as `github_repos.csv` in the current working directory.
 
 ## Output File
 
-The CSV file will contain the following columns:
+The generated CSV file will contain the following columns:
 
-- **Repository Name** (Repo Adı): The name of the repository
-- **Description** (Açıklama): The description of the repository
-- **Language** (Dil): The programming language used in the repository
-- **Star Count** (Yıldız Sayısı): The number of stars the repository has on GitHub
-- **Fork Count** (Fork Sayısı): The number of forks of the repository
-- **URL** (URL): The GitHub URL of the repository
+- **Repo Adı (Repository Name)**: The name of the repository
+- **Açıklama (Description)**: The description of the repository
+- **Dil (Language)**: The primary programming language used in the repository
+- **Yıldız Sayısı (Star Count)**: The number of stars the repository has on GitHub
+- **Fork Sayısı (Fork Count)**: The number of forks of the repository
+- **URL**: The GitHub URL of the repository
 
 ## License
 

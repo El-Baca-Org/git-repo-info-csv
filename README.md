@@ -1,13 +1,17 @@
 # Download GitHub Repo Information in CSV Format
+(Aşağıda Türkçe açıklamayı bulabilirsiniz / Turkish description is available below)
 
-This project is a simple Python script that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
+This project is a Python script that retrieves all repository information of a specific GitHub user and saves it into a CSV file. The repository details are fetched via the GitHub API and written to a CSV format, making it easy to access information about all repositories of a GitHub user.
+
+The script supports both a Command Line Interface (CLI) and a Graphical User Interface (GUI).
 
 ## Requirements
 
-To run this script, you'll need the following:
+To run this tool, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
+- `tkinter` library (usually included with standard Python installations, required for the GUI)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -49,14 +53,18 @@ python GitRepoInfosCSV.py --help
 
 ## Output File
 
-The CSV file will contain the following columns:
+The generated CSV file will contain the following columns:
 
-- **Repository Name**: The name of the repository
-- **Description**: The description of the repository
-- **Language**: The programming language used in the repository
-- **Star Count**: The number of stars the repository has on GitHub
-- **Fork Count**: The number of forks of the repository
+- **Repo Adı (Repository Name)**: The name of the repository
+- **Açıklama (Description)**: The description of the repository
+- **Dil (Language)**: The programming language used in the repository
+- **Yıldız Sayısı (Star Count)**: The number of stars the repository has on GitHub
+- **Fork Sayısı (Fork Count)**: The number of forks of the repository
 - **URL**: The GitHub URL of the repository
+
+## Interactive Notebook
+
+The repository also includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`) designed for interactive usage.
 
 ## License
 

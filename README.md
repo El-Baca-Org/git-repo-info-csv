@@ -16,7 +16,7 @@ To run this tool, you'll need the following:
 
 - Python 3.x
 - `requests` library (to fetch data from the API)
-- `tkinter` library (for the GUI, usually included with Python standard library)
+- `tkinter` library (usually included in the Python standard library, but on some Linux distributions you might need to install it with `sudo apt install python3-tk`)
 
 You can install the `requests` library by running the following command in your terminal or command prompt:
 
@@ -26,40 +26,25 @@ pip install requests
 
 ## Usage
 
-You can use this tool either through the GUI, the CLI, or interactively via the provided Jupyter Notebook.
+1. Download or clone the project files.
 
-**Note:** The script uses the unauthenticated GitHub API, which has a rate limit of 60 requests per hour per IP address.
+### CLI Mode
+You can use the command-line interface to quickly fetch repository information by specifying the `--username` argument. You can optionally specify an output file with `--output`.
 
-### 1. Graphical User Interface (GUI)
+```bash
+python GitRepoInfosCSV.py --username torvalds --output torvalds_repos.csv
+```
 
-If you run the script without any arguments, a simple GUI will open:
+### GUI Mode
+If you run the script without any arguments, it will launch a Graphical User Interface (GUI).
 
 ```bash
 python GitRepoInfosCSV.py
 ```
+This will open a window where you can input the GitHub username and the desired output filename, and then click a button to fetch and save the data.
 
-- Enter the GitHub username in the text field.
-- Click "Fetch & Save Repos".
-- Choose where you want to save the CSV file.
-
-### 2. Command Line Interface (CLI)
-
-You can also use the script from the command line by providing arguments:
-
-```bash
-python GitRepoInfosCSV.py --username <github_username>
-```
-
-You can optionally specify the output filename using the `--output` flag:
-
-```bash
-python GitRepoInfosCSV.py --username <github_username> --output my_repos.csv
-```
-
-### 3. Jupyter Notebook (Interactive)
-
-The repository includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`) designed for interactive usage.
-When you run the notebook, it will prompt you to enter the GitHub username and will fetch and save the repository data accordingly.
+### Jupyter Notebook
+The project also includes a Jupyter Notebook (`GitRepoInfosCSV.ipynb`). When you run the notebook cells, you will be interactively prompted to enter a GitHub username.
 
 ## Output File
 
